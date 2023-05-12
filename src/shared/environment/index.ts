@@ -1,8 +1,8 @@
 export const Enviroment = {
 
-    LIMITE_DE_LINHAS: '10',      //Define a quantidade de linhas a ser carredo por padrao nas listagens.
+    LIMITE_DE_LINHAS: 5,      //Define a quantidade de linhas a ser carredo por padrao nas listagens.
 
-    INPUT_DE_BUSCA: 'Pesquisa',     //Placeholder exibido nas inputs
+    INPUT_DE_BUSCA: 'Pesquisar...',     //Placeholder exibido nas inputs
 
     LISTAGEM_VAZIA: 'Nenhum registro encontrado.',   //text axibido quando nenhum registro é encontrado em uma listagem.
 

@@ -12,7 +12,7 @@ import { ReactNode } from "react";
 
 interface ILayoutBaseDePaginaProps {
   titulo: string;
-  children: string;
+  children: ReactNode;
   barraDeFerramentas: ReactNode;
 }
 
