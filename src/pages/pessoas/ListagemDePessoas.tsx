@@ -34,7 +34,7 @@ export const ListagemDePessoas: React.FC = () => {
   const [totalCount, setTotalCount] = useState(0);
 
   const busca = useMemo(() => {
-    return searchParams.get("busca") || " ";
+    return searchParams.get("busca") || "";
   }, [searchParams]);
 
   const pagina = useMemo(() => {
@@ -81,7 +81,7 @@ export const ListagemDePessoas: React.FC = () => {
 
   return (
     <LayoutBaseDePagina
-      titulo="Listagem de passoas"
+      titulo="Listagem de pessoas"
       barraDeFerramentas={
         <FerramentasDaListagem
           mostrarInputBusca

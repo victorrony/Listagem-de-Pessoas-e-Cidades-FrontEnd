@@ -12,7 +12,7 @@ interface IBarraDeFerramentasProps {
 }
 
 export const FerramentasDaListagem: React.FC<IBarraDeFerramentasProps> = ({
-  textoDaBusca = " ",
+  textoDaBusca = "",
   mostrarInputBusca = false,
   aoMudarTextDeBusca,
   textoBotaoNovo = "Novo",

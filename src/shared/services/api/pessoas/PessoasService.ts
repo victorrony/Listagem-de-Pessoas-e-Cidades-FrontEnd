@@ -24,7 +24,7 @@ type TPessoasComTotalCount = {
 
 const getAll = async ( page = 1, filter = ' ' ) : Promise<TPessoasComTotalCount | Error> => {
 try {
-    const urlRelative = `/pessoas?_page = ${page}&_limit=${Enviroment.LIMITE_DE_LINHAS}&nomeCompleto_like = ${filter}`; 
+    const urlRelative = `/pessoas?_page=${page}&_limit=${Enviroment.LIMITE_DE_LINHAS}&nomeCompleto_like=${filter}`; 
 
     const { data, headers } = await Api.get(urlRelative);
 
@@ -46,9 +46,7 @@ try {
     const { data } = await Api.get(`/pessoas/${id}`);
 
     if (data) {
-        return  data;
-            
-        
+        return  data;           
     }
     return new Error( 'Error ao consultar os registros.');
 } catch ( error ) {
