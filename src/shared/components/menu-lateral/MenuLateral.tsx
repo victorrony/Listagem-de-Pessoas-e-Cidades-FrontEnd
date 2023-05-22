@@ -81,7 +81,7 @@ export const MenuLateral: React.FC<IMenuLateralProps> = ({ children }) => {
           >
             <Avatar
               sx={{ height: theme.spacing(12), width: theme.spacing(12) }}
-              src="/static/images/avatar/1.jpg"
+              src="/foto.jpg"
             />
           </Box>
           <Divider />

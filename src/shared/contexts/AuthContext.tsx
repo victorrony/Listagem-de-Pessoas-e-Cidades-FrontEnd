@@ -23,7 +23,6 @@ interface IAuthProviderProps {
     children: React.ReactNode;
 }
 
-
 export const AuthProvider: React.FC<IAuthProviderProps> = ({children}) => {
     const [accessToken, setAccessToken] = useState<string>();
 
@@ -48,7 +47,10 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({children}) => {
     }, []);
 
     const handleLogout = useCallback(() => {
-        localStorage.removeItem(LOCAL_STORAGE_KEY__ACCESS_TOKEN);
+        const confirmDelete = window.confirm('Deseja realmente fazer um sair ?')
+        if (confirmDelete) {
+            localStorage.removeItem(LOCAL_STORAGE_KEY__ACCESS_TOKEN);
+        }
         setAccessToken(undefined)
     },[])
       
