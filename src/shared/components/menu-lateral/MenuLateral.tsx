@@ -11,14 +11,18 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import { useAppThemeContext, useAuthContext, useDrawerContext } from "../../contexts"; 
+import {
+  useAppThemeContext,
+  useAuthContext,
+  useDrawerContext,
+} from "../../contexts";
 import { useMatch, useNavigate, useResolvedPath } from "react-router-dom";
 
 interface IlistItemLinkProps {
   to: string;
   icon: string;
   label: string;
-  onClick: (() => void) | undefined ;
+  onClick: (() => void) | undefined;
 }
 
 const ListItemLink: React.FC<IlistItemLinkProps> = ({
@@ -30,7 +34,7 @@ const ListItemLink: React.FC<IlistItemLinkProps> = ({
   const navigate = useNavigate();
 
   const resolvedPath = useResolvedPath(to);
-  const match = useMatch({ path: resolvedPath.pathname, end: false })
+  const match = useMatch({ path: resolvedPath.pathname, end: false });
 
   const handleClick = () => {
     navigate(to);
@@ -38,7 +42,7 @@ const ListItemLink: React.FC<IlistItemLinkProps> = ({
   };
 
   return (
-    <ListItemButton selected={!! match } onClick={handleClick}>
+    <ListItemButton selected={!!match} onClick={handleClick}>
       <ListItemIcon>
         <Icon>{icon}</Icon>
       </ListItemIcon>
@@ -57,7 +61,7 @@ export const MenuLateral: React.FC<IMenuLateralProps> = ({ children }) => {
 
   const { isDrawerOpen, toggleDrawerOpen, drawerOptions } = useDrawerContext();
   const { toggleTheme } = useAppThemeContext();
-  const { logout}= useAuthContext()
+  const { logout } = useAuthContext();
 
   return (
     <>
