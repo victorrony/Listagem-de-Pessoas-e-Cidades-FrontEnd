@@ -12,5 +12,8 @@
 - Git e github
 
 ## Contact:
+<<<<<<< HEAD
 
+=======
+>>>>>>> b0ed9c326e1b5f469bb593f39b3f3f03b108bf71
 victorrony89@gmail.com
