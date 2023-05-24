@@ -2,7 +2,7 @@
 
 # cadastros de pessoas e cidades...
 
-![preview].(./.github/preview.png)
+![preview](./.github/preview.png)
 
 [click aqui apara acessar].()
 
