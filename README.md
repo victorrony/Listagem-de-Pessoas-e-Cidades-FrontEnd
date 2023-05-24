@@ -4,7 +4,7 @@
 
 ![preview](./.github/preview.png)
 
-[click aqui apara acessar].()
+[click aqui apara acessar].(https://victorrony.github.io/materialui-typescript/)
 
 ## Tecnology:
 - Reactjs
