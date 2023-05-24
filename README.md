@@ -1,3 +1,4 @@
+
 # cadastros de pessoas e ciddes...
 
 [preview].(./.github/preview.png)
