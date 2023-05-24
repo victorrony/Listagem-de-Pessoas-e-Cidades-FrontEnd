@@ -14,8 +14,8 @@ import * as yup from 'yup';
 
 
 const loginSchema = yup.object().shape({
-    email: yup.string().email().required(),
-    password: yup.string().required().min(5),
+  email: yup.string().email().required(),
+  password: yup.string().min(5).required(),
 });
 
 
@@ -49,7 +49,7 @@ export const Login: React.FC<ILoginProps> = ({children}) => {
             errors.inner.forEach(error => {
                 if (error.path === 'email') {
                     setEmailError(error.message);
-                } else if (error.path === "password ") {
+                } else if (error.path === 'password') {
                   setPasswordError(error.message);
                 }
             });
