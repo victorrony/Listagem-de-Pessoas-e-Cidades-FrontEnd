@@ -47,7 +47,7 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({children}) => {
     }, []);
 
     const handleLogout = useCallback(() => {
-        const confirmDelete = window.confirm('Deseja realmente fazer um sair ?')
+        const confirmDelete = window.confirm('Deseja realmente sair ?')
         if (confirmDelete) {
             localStorage.removeItem(LOCAL_STORAGE_KEY__ACCESS_TOKEN);
         }

@@ -50,7 +50,7 @@ const [TotalCountCidades, setTotalCountCidades] = useState(0);
             spacing={2}
             display="flex"
             justifyContent="center"
-            gap={2 }
+            gap={2}
           >
             <Grid item xs={12} sm={12} md={6} lg={4} xl={3}>
               <Card>
