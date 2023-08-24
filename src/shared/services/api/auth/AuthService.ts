@@ -10,7 +10,7 @@ const auth = async (
 ): Promise<IAuth | Error> => {
   try {
     const { data } = await Api.get("/auth", { data: { email, password } });
-    console.log(data);
+
     if (data) {
       return data;
     }
