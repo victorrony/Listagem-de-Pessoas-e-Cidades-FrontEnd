@@ -9,8 +9,6 @@ import {
   DetalheDeCidades,
 } from "../pages";
 
-import {  } from "../pages/cidades/ListagemDeCidades";
-
 export const AppRoutes = () => {
   const { setDrawerOptions } = useDrawerContext();
 
@@ -32,7 +30,8 @@ export const AppRoutes = () => {
         label: "pessoas",
       },
     ]);
-  });
+  }, [setDrawerOptions]);
+
   return (
     <Routes>
       <Route path="/pagina-inicial" element={<Dashboard />} />
