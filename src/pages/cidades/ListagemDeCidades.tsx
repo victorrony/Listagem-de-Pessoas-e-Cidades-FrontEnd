@@ -100,6 +100,7 @@ export const ListagemDeCidades: React.FC = () => {
         <Table>
           <TableHead>
             <TableRow>
+            
               <TableCell width={100}>Acoes</TableCell>
               <TableCell>Nome</TableCell>
               
@@ -145,7 +146,7 @@ export const ListagemDeCidades: React.FC = () => {
                     page={pagina}
                     count={Math.ceil(totalCount / Enviroment.LIMITE_DE_LINHAS)}
                     onChange={(_, newPage) =>
-                      setSearchParams(
+                    setSearchParams(
                         { busca, pagina: newPage.toString() },
                         { replace: true }
                       )

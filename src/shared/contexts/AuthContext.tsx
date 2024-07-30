@@ -29,29 +29,36 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
     const accessToken = localStorage.getItem(LOCAL_STORAGE_KEY__ACCESS_TOKEN);
 
     if (accessToken) {
-      setAccessToken(JSON.parse(accessToken));
-    } else {
-      setAccessToken(undefined);
+      try {
+        setAccessToken(JSON.parse(accessToken));
+      } catch (error) {
+        console.log("invalid access token: ", error);
+        setAccessToken(undefined);
+      }
     }
   }, []);
 
   const handleLogin = useCallback(async (email: string, password: string) => {
-    const result = await AuthService.auth(email, password);
-    //console.log(result);
-    if (result instanceof Error) {
-      return result.message;
-    } else {
-      localStorage.setItem(
-        LOCAL_STORAGE_KEY__ACCESS_TOKEN,
-        JSON.stringify(result.accessToken)
-      );
-      setAccessToken(result.accessToken);
+    try {
+      const result = await AuthService.auth(email, password);
+      if (result instanceof Error) {
+        return result.message;
+      } else {
+        localStorage.setItem(
+          LOCAL_STORAGE_KEY__ACCESS_TOKEN,
+          JSON.stringify(result.accessToken)
+        );
+        setAccessToken(result.accessToken);
+      }
+    } catch (error) {
+      console.log(`error logging in: ${error}`);
+      return "An error occurred while logging in.";
     }
   }, []);
 
   const handleLogout = useCallback(() => {
-    const confirmDelete = window.confirm("Deseja realmente sair ?");
-    if (confirmDelete) {
+    const confirmLogout = window.confirm("Deseja realmente sair ?");
+    if (confirmLogout) {
       localStorage.removeItem(LOCAL_STORAGE_KEY__ACCESS_TOKEN);
     }
     setAccessToken(undefined);

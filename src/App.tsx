@@ -14,7 +14,7 @@ export const App = () => {
   return (
     <AuthProvider>
       <AppThemeProvider>
-        <Login>
+        {/* <Login> */}
           <DrawerProvider>
             <BrowserRouter>
               <MenuLateral>
@@ -22,7 +22,7 @@ export const App = () => {
               </MenuLateral>
             </BrowserRouter>
           </DrawerProvider>
-        </Login>
+        {/* </Login> */}
       </AppThemeProvider>
     </AuthProvider>
   );

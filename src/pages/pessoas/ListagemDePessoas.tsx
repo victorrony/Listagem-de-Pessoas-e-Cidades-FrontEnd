@@ -129,7 +129,7 @@ export const ListagemDePessoas: React.FC = () => {
           </TableBody>
 
           {totalCount === 0 && !isLoading && (
-            <caption>{Enviroment.LISTAGEM_VAZIA}</caption>
+            <caption></caption>
           )}
 
           <TableFooter>
