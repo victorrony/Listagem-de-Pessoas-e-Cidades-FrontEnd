@@ -24,7 +24,8 @@ const [TotalCountCidades, setTotalCountCidades] = useState(0);
         } else {
           setTotalCountCidades(result.totalCount);          
         }
-      });  
+      }); 
+       
       PessoasService.getAll(1).then((result) => { 
         setIsLoadingPessoas(false);
 

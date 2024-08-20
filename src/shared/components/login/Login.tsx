@@ -23,9 +23,7 @@ interface ILoginProps {
 
 export const Login: React.FC<ILoginProps> = ({ children }) => {
   const { isAuthenticated, login } = useAuthContext();
-
   const [isLoading, setIsLoading] = useState(false);
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
@@ -33,10 +31,12 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
 
   const handleSubmit = () => {
     setIsLoading(true);
+    console.log(email, password);
 
     loginSchema
       .validate({ email, password }, { abortEarly: false })
       .then((dadosValidados) => {
+        console.log(dadosValidados);
         login(dadosValidados.email, dadosValidados.password).then(() => {
           setIsLoading(false);
         });

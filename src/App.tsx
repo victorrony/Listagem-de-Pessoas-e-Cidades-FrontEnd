@@ -19,11 +19,9 @@ export const App = () => {
 
           <DrawerProvider>
             <BrowserRouter>
-
               <MenuLateral>
                 <AppRoutes />
               </MenuLateral>
-
             </BrowserRouter>
           </DrawerProvider>
 

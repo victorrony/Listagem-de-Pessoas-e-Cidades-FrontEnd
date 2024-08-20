@@ -5,7 +5,7 @@ export const useDebounce = (delay = 300, notDelayInFirstTime = true ) => {
     const isFirstTime = useRef(notDelayInFirstTime);
     const debouncing = useRef<NodeJS.Timeout>();
 
-     const debounce = useCallback((func: () => void) =>{
+    const debounce = useCallback((func: () => void) =>{
         if (isFirstTime.current) {
             isFirstTime.current = false;
             func();
@@ -15,7 +15,7 @@ export const useDebounce = (delay = 300, notDelayInFirstTime = true ) => {
             }
             debouncing.current = setTimeout(() => func(), delay); 
         }
-        }, [delay]);    
+    }, [delay]);    
 
-     return { debounce };
-}; 
+    return { debounce };
+};

@@ -27,6 +27,7 @@ try {
     const urlRelative = `/pessoas?_page=${page}&_limit=${Enviroment.LIMITE_DE_LINHAS}&nomeCompleto_like=${filter}`; 
 
     const { data, headers } = await Api.get(urlRelative);
+   
 
     if (data) {
         return {
