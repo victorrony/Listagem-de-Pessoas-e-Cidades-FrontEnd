@@ -8,14 +8,14 @@ import {
   AuthProvider,
   DrawerProvider,
 } from "./shared/contexts";
-import { Login, MenuLateral } from "./shared/components";
+import { MenuLateral } from "./shared/components";
 
 export const App = () => {
   return (
     <AuthProvider>
       <AppThemeProvider>
 
-        <Login>
+        {/* <Login> */}
 
           <DrawerProvider>
             <BrowserRouter>
@@ -27,7 +27,7 @@ export const App = () => {
             </BrowserRouter>
           </DrawerProvider>
 
-        </Login>
+        {/* </Login> */}
         
       </AppThemeProvider>
     </AuthProvider>
