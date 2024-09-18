@@ -6,5 +6,5 @@ export const Enviroment = {
 
     LISTAGEM_VAZIA: 'Nenhum registro encontrado.',   //text axibido quando nenhum registro é encontrado em uma listagem.
 
-    URL_BASE: 'http://localhost:3335',   //Url base da consulta dos dados dessa aplicação. 
+    URL_BASE: 'https://listagem-de-pessoas-e-cidades-back-end.vercel.app/',   //Url base da consulta dos dados dessa aplicação. 
 };
