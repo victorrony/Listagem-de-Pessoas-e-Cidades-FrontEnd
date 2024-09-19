@@ -12,6 +12,7 @@ interface IAuthContextData {
   isAuthenticated: boolean;
   logout: () => void;
   login: (email: string, password: string) => Promise<string | void>;
+  cadastrar: (email: string, senha: string, nome: string, sobrenome: string,) => Promise<string | void>;
 }
 
 const AuthContext = createContext({} as IAuthContextData);
@@ -68,7 +69,7 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, login: handleLogin, logout: handleLogout }}
+      value={{ isAuthenticated, login: handleLogin, cadastrar: handleLogin , logout: handleLogout }}
     >
       {children}
     </AuthContext.Provider>

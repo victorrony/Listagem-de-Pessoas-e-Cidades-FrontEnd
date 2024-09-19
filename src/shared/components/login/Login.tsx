@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAuthContext } from "../../contexts";
+import { useNavigate } from "react-router-dom";
 import {
   Box,
   CardContent,
@@ -28,6 +29,8 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+
+  // const navigate = useNavigate();
 
   const handleSubmit = () => {
     setIsLoading(true);
@@ -95,6 +98,23 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
               onKeyDown={() => setPasswordError("")}
             />
           </Box>
+
+          <Box display="flex" flexDirection="column" gap={2} width={250}>
+            <Typography variant="body2" align="center">
+              Não possui conta?
+              <Button
+                size="small"
+                onClick={() => {
+                  setEmail("");
+                  setPassword("");
+                  // navigate("/cadastrar"); 
+                }}
+              >
+                Crie uma agora
+              </Button>
+            </Typography>
+          </Box>
+
         </CardContent>
         <CardActions>
           <Box width="100%" display="flex" justifyContent="center">
