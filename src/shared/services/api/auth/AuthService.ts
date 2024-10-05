@@ -1,52 +1,28 @@
 import { Api } from "../axios-config";
 
-interface IAuth {
+interface IAuthResponse {
   accessToken: string;
 }
 
-//  const baseURL = "http://localhost:3333";
-
-const auth = async (
-  email: string,
-  password: string
-): Promise<IAuth | Error> => {
+const auth = async (email: string, senha: string): Promise<IAuthResponse | Error> => {
   try {
-    const { data } = await Api.get("/auth/login", { data: { email, password }});
-    
-    if (data) {
-      return data;
-    }
-    return new Error("Error ao entrar");
-
+    const { data } = await Api.post<IAuthResponse>("/entrar", { email, senha });
+    return data;
   } catch (error) {
-    console.log(error);
-    const errorMessage = (error as { message: string }).message || "Error ao login.";
-    return new Error(errorMessage);
+    return new Error((error as { message: string }).message || "Error ao entrar");
   }
 };
 
-// const auth = async (
-//   email: string,
-//   password: string
-// ): Promise<IAuth | Error> => {
-//   try {
-//     const response = await Api.post<IAuth>("/auth/login", {
-//       email,
-//       password,
-//     });
-//     const data = response.data;
-//     console.log(data);
-//     if (data) {
-//       return data;
-//     }
-//     return new Error("Error ao entrar");
-//   } catch (error) {
-//     console.log(error);
-//     const errorMessage = (error as { message: string }).message || "Error ao login.";
-//     return new Error(errorMessage);
-//   }
-// };
+const register = async (nome: string, email: string, senha: string): Promise<IAuthResponse | Error> => {
+  try {
+    const { data } = await Api.post<IAuthResponse>("/cadastrar", { nome, email, senha });
+    return data;
+  } catch (error) {
+    return new Error((error as { message: string }).message || "Error ao registrar");
+  }
+};
 
 export const AuthService = {
   auth,
+  register,
 };
