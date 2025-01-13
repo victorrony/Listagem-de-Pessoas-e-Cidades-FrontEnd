@@ -1,24 +1,16 @@
 import { Api } from "../axios-config";
 
-
 interface IAuth {
-    accessToken: string;
+   accessToken: string;
 }
 
-const auth = async ( email: string, password: string): Promise<IAuth | Error> => {
-    try {
-        const { data } = await Api.get(`/auth`, { data : { email, password}});
+const entrar = async (email: string, password: string): Promise<IAuth> =>
+   (await Api.post(`/entrar`, { email, password })).data;
 
-        if (data) {
-            return  data;        
-        }
-        return new Error('Error no login');
-    } catch ( error ) {        
-        return new Error((error as {message: string}).message || 'Error no login.');
-    }
-};
-
+const register = async (name: string, email: string, password: string): Promise<IAuth> =>
+   (await Api.post(`/cadastrar`, { name, email, password })).data;
 
 export const AuthService = {
-    auth
+   entrar,
+   register,
 };

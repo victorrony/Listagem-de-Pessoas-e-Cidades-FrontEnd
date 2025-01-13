@@ -6,10 +6,11 @@ import {
   DetalheDePessoas,
   ListagemDePessoas,
   ListagemDeCidades,
-  DetalheDeCidades,
+  DetalheDeCidades  
 } from "../pages";
 
 import {  } from "../pages/cidades/ListagemDeCidades";
+
 
 export const AppRoutes = () => {
   const { setDrawerOptions } = useDrawerContext();
