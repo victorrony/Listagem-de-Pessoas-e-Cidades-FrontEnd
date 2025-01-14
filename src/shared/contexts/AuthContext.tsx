@@ -2,10 +2,10 @@ import { createContext, useCallback, useState, useMemo, useEffect, useContext } 
 import { AuthService } from "../services/api/auth/AuthService";
 
 interface IAuthContextData {
-   isAuthenticated: boolean;
-   logout: () => void;
-   login: (email: string, senha: string) => Promise<string | void>;
-   cadastrar: (email: string, senha: string, nome: string) => Promise<string | void>;
+  isAuthenticated: boolean;
+  logout: () => void;
+  login: (email: string, password: string) => Promise<string | void>;
+  register: (name: string, email: string, password: string) => Promise<string | void>;
 }
 
 const AuthContext = createContext({} as IAuthContextData);
@@ -13,72 +13,88 @@ const AuthContext = createContext({} as IAuthContextData);
 const LOCAL_STORAGE_KEY__ACCESS_TOKEN = "APP_ACCESS_TOKEN";
 
 interface IAuthProviderProps {
-   children: React.ReactNode;
+  children: React.ReactNode;
 }
 
 export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
-   const [accessToken, setAccessToken] = useState<string>();
+  const [accessToken, setAccessToken] = useState<string | null>(null);
 
-   useEffect(() => {
-      const accessToken = localStorage.getItem(LOCAL_STORAGE_KEY__ACCESS_TOKEN);
-
-      if (accessToken && accessToken !== "undefined") {
-         try {
-            setAccessToken(JSON.parse(accessToken));
-         } catch (error) {
-            console.log("invalid access token: ", error);
-            setAccessToken(undefined);
-         }
+  useEffect(() => {
+    const accessTokenFromStorage = localStorage.getItem(LOCAL_STORAGE_KEY__ACCESS_TOKEN);
+    try {
+      if (accessTokenFromStorage) {
+        setAccessToken(JSON.parse(accessTokenFromStorage));
+        console.log(accessTokenFromStorage);
+      } else {
+        setAccessToken(null);
       }
-   }, []);
+    } catch (error) {
+      console.error("Failed to parse access token:", error);
+      setAccessToken(null);
+    }
+  }, []);
 
-   const handleLogin = useCallback(async (email: string, senha: string) => {
+  const handleLogin = useCallback(
+    async (email: string, password: string) => {
       try {
-         const result = await AuthService.auth(email, senha);
-         if (result instanceof Error) {
-            return result.message;
-         } else {
-            localStorage.setItem(LOCAL_STORAGE_KEY__ACCESS_TOKEN, JSON.stringify(result.accessToken));
-            setAccessToken(result.accessToken);
-         }
+        const result = await AuthService.entrar(email, password);
+        if (result instanceof Error) {
+          return result.message;
+        } else {
+          localStorage.setItem(
+            LOCAL_STORAGE_KEY__ACCESS_TOKEN,
+            JSON.stringify(result.accessToken)
+          );
+          setAccessToken(result.accessToken);
+        }
       } catch (error) {
-         console.log(`error logging in: ${error}`);
-         return "An error occurred while logging in.";
+        console.error("Failed to login:", error);
+        return "Erro ao realizar o login";
       }
-   }, []);
+    },
+    [setAccessToken]
+  );
 
-   const handleRegister = useCallback(async (nome: string, email: string, senha: string) => {
+  const handleRegister = useCallback(
+    async (name: string, email: string, password: string) => {
       try {
-         const result = await AuthService.register(nome, email, senha);
-         if (result instanceof Error) {
-            return result.message;
-         } else {
-            localStorage.setItem(LOCAL_STORAGE_KEY__ACCESS_TOKEN, result.accessToken);
-            setAccessToken(result.accessToken);
-         }
+        const result = await AuthService.register(name, email, password);
+        if (result instanceof Error) {
+          return result.message;
+        } else {
+          localStorage.setItem(
+            LOCAL_STORAGE_KEY__ACCESS_TOKEN,
+            JSON.stringify(result.accessToken)
+          );
+          setAccessToken(result.accessToken);
+          console.log(accessToken);
+        }
       } catch (error) {
-         console.log(`error registering: ${error}`);
-         return "An error occurred while registering.";
+        console.error("Failed to register:", error);
+        return "Erro ao realizar o cadastro";
       }
-   }, []);
+    },
+    [setAccessToken]
+  );
 
-   const handleLogout = useCallback(() => {
-      const confirmLogout = window.confirm("Deseja realmente sair ?");
-      if (confirmLogout) {
-         localStorage.removeItem(LOCAL_STORAGE_KEY__ACCESS_TOKEN);
-      }
-      setAccessToken(undefined);
-   }, []);
+  const handleLogout = useCallback(() => {
+    const confirmDelete = window.confirm("Deseja realmente sair ?");
+    if (confirmDelete) {
+      localStorage.removeItem(LOCAL_STORAGE_KEY__ACCESS_TOKEN);
+      setAccessToken(null);
+    }
+  }, [setAccessToken]);
 
-   const isAuthenticated = useMemo(() => !!accessToken, [accessToken]);
+  const isAuthenticated = useMemo(() => !!accessToken, [accessToken]);
+  console.log(isAuthenticated);
 
-   return (
-      <AuthContext.Provider
-         value={{ isAuthenticated, login: handleLogin, cadastrar: handleRegister, logout: handleLogout }}
-      >
-         {children}
-      </AuthContext.Provider>
-   );
+  return (
+    <AuthContext.Provider
+      value={{ isAuthenticated, login: handleLogin, logout: handleLogout, register: handleRegister }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
 export const useAuthContext = () => useContext(AuthContext);
