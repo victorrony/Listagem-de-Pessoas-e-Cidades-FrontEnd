@@ -71,9 +71,12 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
       setName("");
       setEmail("");
       setPassword("");
+      // Uncomment if using confirmPassword
+      // setConfirmPassword("");
       setNameError("");
       setEmailError("");
       setPasswordError("");
+      // setConfirmPasswordError("");
    };
 
    if (isAuthenticated) return <>{children}</>;
