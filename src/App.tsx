@@ -1,6 +1,6 @@
-import { BrowserRouter } from "react-router-dom";
-
 import "./shared/forms/traducoesYup";
+
+import { BrowserRouter } from "react-router-dom";
 
 import { AppRoutes } from "./routes";
 import { AppThemeProvider, AuthProvider, DrawerProvider } from "./shared/contexts";
@@ -10,7 +10,7 @@ export const App = () => {
    return (
       <AuthProvider>
          <AppThemeProvider>
-            <Login>
+            {/* <Login> */}
                <DrawerProvider>
                   <BrowserRouter>
                      <MenuLateral>
@@ -18,7 +18,7 @@ export const App = () => {
                      </MenuLateral>
                   </BrowserRouter>
                </DrawerProvider>
-            </Login>
+            {/* </Login> */}
          </AppThemeProvider>
       </AuthProvider>
    );
