@@ -1,4 +1,5 @@
 import { createContext, useCallback, useState, useMemo, useEffect, useContext } from "react";
+import { AxiosError } from "axios";
 import { AuthService } from "../services/api/auth/AuthService";
 
 interface IAuthContextData {
@@ -48,6 +49,9 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
           setAccessToken(result.accessToken);
         }
       } catch (error) {
+        if (error instanceof AxiosError) {
+          return error.response?.data.errors.default || "Erro ao realizar o login";
+        }
         console.error("Failed to login:", error);
         return "Erro ao realizar o login";
       }
@@ -70,6 +74,9 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
           console.log(accessToken);
         }
       } catch (error) {
+        if (error instanceof AxiosError) {
+          return error.response?.data.errors.default || "Erro ao realizar o cadastro";
+        }
         console.error("Failed to register:", error);
         return "Erro ao realizar o cadastro";
       }

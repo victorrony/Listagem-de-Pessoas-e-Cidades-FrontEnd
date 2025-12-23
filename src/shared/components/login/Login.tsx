@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAuthContext } from "../../contexts";
-import { Box, CardContent, Card, CardActions, Button, Typography, TextField, CircularProgress } from "@mui/material";
+import { Box, CardContent, Card, CardActions, Button, Typography, TextField, CircularProgress, Link, Alert } from "@mui/material";
 import * as yup from "yup";
 
 const loginSchema = yup.object().shape({
@@ -12,10 +12,10 @@ const registerSchema = yup.object().shape({
    name: yup.string().required(),
    email: yup.string().email().required(),
    password: yup.string().min(5).required(),
-   // confirmPassword: yup
-   //    .string()
-   //    .oneOf([yup.ref("password"), undefined], "Passwords must match")
-   //    .required(),
+   confirmPassword: yup
+      .string()
+      .oneOf([yup.ref("password"), undefined], "Passwords must match")
+      .required(),
 });
 
 interface ILoginProps {
@@ -31,12 +31,13 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
    const [name, setName] = useState("");
    const [email, setEmail] = useState("");
    const [password, setPassword] = useState("");
-   // const [confirmPassword, setConfirmPassword] = useState("");
+   const [confirmPassword, setConfirmPassword] = useState("");
+   const [loginError, setLoginError] = useState("");
 
    const [nameError, setNameError] = useState("");
    const [emailError, setEmailError] = useState("");
    const [passwordError, setPasswordError] = useState("");
-   // const [confirmPasswordError, setConfirmPasswordError] = useState("");
+   const [confirmPasswordError, setConfirmPasswordError] = useState("");
 
    const handleSubmit = async () => {
       setIsLoading(true);
@@ -46,10 +47,17 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
          const dadosValidados = await schema.validate({ name, email, password }, { abortEarly: false });
 
          if (isRegister) {
-            await register(name, dadosValidados.email, dadosValidados.password);
-            if (isAuthenticated) return <>{children}</>;
+            const result = await register(name, dadosValidados.email, dadosValidados.password);
+            if (typeof result === "string") {
+               setLoginError(result);
+            } else if (isAuthenticated) {
+               return <>{children}</>;
+            }
          } else {
-            await login(dadosValidados.email, dadosValidados.password);
+            const result = await login(dadosValidados.email, dadosValidados.password);
+            if (typeof result === "string") {
+               setLoginError(result);
+            }
          }
       } catch (errors) {
          if (errors instanceof yup.ValidationError) {
@@ -58,6 +66,8 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
                   setEmailError(error.message);
                } else if (error.path === "password") {
                   setPasswordError(error.message);
+               } else if (error.path === "confirmPassword") {
+                  setConfirmPasswordError(error.message);
                }
             });
          }
@@ -72,11 +82,12 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
       setEmail("");
       setPassword("");
       // Uncomment if using confirmPassword
-      // setConfirmPassword("");
+      setConfirmPassword("");
       setNameError("");
       setEmailError("");
       setPasswordError("");
-      // setConfirmPasswordError("");
+      setConfirmPasswordError("");
+      setLoginError("");
    };
 
    if (isAuthenticated) return <>{children}</>;
@@ -89,6 +100,10 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
                   <Typography variant="h6" align="center">
                      {isRegister ? "Registre-se" : "Identifique-se"}
                   </Typography>
+
+                  {loginError && (
+                     <Alert severity="error">{loginError}</Alert>
+                  )}
 
                   {isRegister && (
                      <TextField
@@ -127,7 +142,7 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
                      onKeyDown={() => setPasswordError("")}
                   />
 
-                  {/* {isRegister && (
+                  {isRegister && (
                      <TextField
                         fullWidth
                         type="password"
@@ -139,7 +154,7 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         onKeyDown={() => setConfirmPasswordError("")}
                      />
-                  )} */}
+                  )}
                </Box>
 
                <Box display="flex" justifyContent="center">
@@ -147,34 +162,16 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
                      {isRegister ? (
                         <>
                            Já tem uma conta?{" "}
-                           <button
-                              onClick={handleToggleMode}
-                              style={{
-                                 background: "none",
-                                 border: "none",
-                                 color: "blue",
-                                 textDecoration: "underline",
-                                 cursor: "pointer",
-                              }}
-                           >
+                           <Link component="button" variant="body2" onClick={handleToggleMode}>
                               Entre
-                           </button>
+                           </Link>
                         </>
                      ) : (
                         <>
                            Não tem uma conta?{" "}
-                           <button
-                              onClick={handleToggleMode}
-                              style={{
-                                 background: "none",
-                                 border: "none",
-                                 color: "blue",
-                                 textDecoration: "underline",
-                                 cursor: "pointer",
-                              }}
-                           >
+                           <Link component="button" variant="body2" onClick={handleToggleMode}>
                               Cadastre-se
-                           </button>
+                           </Link>
                         </>
                      )}
                   </Typography>
